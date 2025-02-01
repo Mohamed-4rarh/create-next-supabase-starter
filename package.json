@@ -1,0 +1,24 @@
+{
+  "name": "create-next-supabase-starter",
+  "version": "1.0.0",
+  "description": "A simple CLI to create a Next.js 15 + Supabase project",
+  "bin": {
+    "create-next-supabase": "dist/index.js"
+  },
+  "scripts": {
+    "build": "pnpm tsc",
+    "prepare": "pnpm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "degit": "^2.8.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "@types/node": "^22.13.0"
+  },
+  "type": "module"
+}

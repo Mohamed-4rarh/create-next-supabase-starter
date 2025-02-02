@@ -115,23 +115,6 @@ const runCLI = async () => {
     console.log(chalk.blue("\n📦 Installing dependencies...\n"));
     execSync("pnpm install", { stdio: "inherit" });
 
-    // **Ask if the user wants to initialize Git**
-    const gitResponse = await prompts({
-      type: "confirm",
-      name: "initializeGit",
-      message: "Do you want to initialize Git?",
-      initial: true,
-    });
-
-    if (gitResponse.initializeGit) {
-      console.log(chalk.blue("\n🔗 Initializing Git...\n"));
-      execSync("git init && git add . && git commit -m 'Initial commit'", {
-        stdio: "inherit",
-      });
-    } else {
-      console.log(chalk.yellow("\n⚠️ Skipped Git initialization."));
-    }
-
     console.log(
       chalk.green(
         "\n🚀 Setup complete! Run the following to start your project:\n"

@@ -6,7 +6,7 @@ A powerful CLI tool to **instantly scaffold a modern, production-ready Next.js 1
 
 ## 🤔 Why Use This Starter Instead of Starting from Scratch?
 
-Setting up a **Next.js 15 + Supabase project** from scratch can be time-consuming and repetitive. Developers often spend **hours configuring** authentication, database setup, styling, and component libraries before even writing business logic.
+Setting up a **Next.js 15 + Supabase project** from scratch can be **time-consuming and repetitive**. Developers often spend **hours configuring** authentication, database setup, styling, and component libraries before even writing business logic.
 
 This starter **eliminates the setup hassle** and provides a **pre-configured, production-ready environment with stable versions**, allowing you to focus **on building features** instead of boilerplate code.
 
@@ -32,9 +32,9 @@ This starter **eliminates the setup hassle** and provides a **pre-configured, pr
 
 ## 📥 Installation & Usage
 
-### 1️⃣ Quick Start (Recommended)
+### **1️⃣ Quick Start (Recommended)**
 
-You don’t need to install anything! Simply run:
+You **don’t need to install anything!** Simply run:
 
 ```sh
 pnpm dlx create-next-supabase-starter@latest my-project
@@ -48,9 +48,9 @@ npx create-next-supabase-starter@latest my-project
 
 ---
 
-### 2️⃣ Running Without a Project Name
+### **2️⃣ Running Without a Project Name**
 
-If you don’t provide a name, the CLI will ask for one:
+If you don’t provide a name, the CLI will prompt you:
 
 ```sh
 pnpm dlx create-next-supabase-starter@latest
@@ -64,7 +64,7 @@ pnpm dlx create-next-supabase-starter@latest
 
 This starter is not just a simple Next.js setup—it comes **fully loaded** with essential features to kickstart any serious project.
 
-### 🚀 **Technology Stack**
+### **🚀 Technology Stack**
 
 | Technology                  | Purpose                                                                                                      |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -83,17 +83,18 @@ This starter is not just a simple Next.js setup—it comes **fully loaded** with
 
 ## 🛠️ How It Works
 
-1️⃣ **Clones the Next.js + Supabase starter template**  
-2️⃣ **Installs all dependencies automatically** (`pnpm install`)  
-3️⃣ **Asks if you want to initialize Git** (`git init`)  
+1️⃣ **Clones the Next.js + Supabase starter template.**  
+2️⃣ **Installs all dependencies automatically** (`pnpm install`).  
+3️⃣ **Asks if you want to initialize Git** (`git init`).  
 4️⃣ **Sets up a pre-configured project** with:
 
 - Supabase authentication
 - Tailwind CSS & shadcn/ui
 - React Hook Form for forms
 - Next.js 15 (App Router)
-- TypeScript for type safety  
-  5️⃣ **Displays a success message with your next steps**
+- TypeScript for type safety
+
+5️⃣ **Displays a success message with your next steps.**
 
 ---
 
@@ -110,7 +111,7 @@ This starter is not just a simple Next.js setup—it comes **fully loaded** with
 
 ---
 
-## 🔥 Why Choose This Starter?
+## 🔥 Why Use This Starter?
 
 ✅ **No More Boilerplate Setup** – Everything is pre-configured for you.  
 ✅ **Focus on Building, Not Configuring** – Get started instantly with Next.js 15, Supabase, and Tailwind.  

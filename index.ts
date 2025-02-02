@@ -3,25 +3,30 @@
 import chalk from "chalk";
 import { execSync } from "child_process";
 import degit from "degit";
+import prompts from "prompts";
 
 // CLI Banner
 console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
 
 (async () => {
-  const projectName = process.argv[2];
+  let projectName = process.argv[2];
 
+  // If no project name, ask once. If still empty, use default name.
   if (!projectName) {
-    console.log(chalk.red("❌ Please provide a project name!"));
-    console.log(
-      chalk.yellow("Example: pnpm dlx create-next-supabase my-project")
-    );
-    process.exit(1);
+    const response = await prompts({
+      type: "text",
+      name: "name",
+      message: "Enter your project name (or press enter to use default):",
+      initial: "next-supabase-starter",
+    });
+
+    projectName = response.name.trim() || "next-supabase-starter";
   }
 
   console.log(chalk.green(`\n📦 Setting up ${projectName}...\n`));
 
   // Clone the starter repo
-  const repo = "https://github.com/Mohamed-4rarh/next-supabase-starter.git"; // Replace with your actual repo
+  const repo = "https://github.com/Mohamed-4rarh/next-supabase-starter.git";
   const emitter = degit(repo, { cache: false, force: true });
 
   try {
@@ -35,11 +40,22 @@ console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
     console.log(chalk.blue("\n📦 Installing dependencies...\n"));
     execSync("pnpm install", { stdio: "inherit" });
 
-    // Initialize Git
-    console.log(chalk.blue("\n🔗 Initializing Git...\n"));
-    execSync("git init && git add . && git commit -m 'Initial commit'", {
-      stdio: "inherit",
+    // Ask if the user wants to initialize Git
+    const gitResponse = await prompts({
+      type: "confirm",
+      name: "initializeGit",
+      message: "Do you want to initialize Git?",
+      initial: true,
     });
+
+    if (gitResponse.initializeGit) {
+      console.log(chalk.blue("\n🔗 Initializing Git...\n"));
+      execSync("git init && git add . && git commit -m 'Initial commit'", {
+        stdio: "inherit",
+      });
+    } else {
+      console.log(chalk.yellow("\n⚠️ Skipped Git initialization."));
+    }
 
     console.log(
       chalk.green(
@@ -48,6 +64,19 @@ console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
     );
     console.log(chalk.cyan(`  cd ${projectName}`));
     console.log(chalk.cyan("  pnpm dev\n"));
+
+    // 🎉 Custom About Me Message
+    console.log(
+      chalk.magenta.bold("\n----------------------------------------")
+    );
+    console.log(chalk.magenta.bold("🎉 Created by Mohamed Ararh 🚀"));
+    console.log(
+      chalk.magenta("💻 GitHub: ") +
+        chalk.cyan("https://github.com/Mohamed-4rarh")
+    );
+    console.log(
+      chalk.magenta.bold("----------------------------------------\n")
+    );
   } catch (error) {
     console.error(chalk.red("❌ Error setting up project:", error));
   }

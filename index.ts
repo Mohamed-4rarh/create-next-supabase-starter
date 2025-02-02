@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import chalk from "chalk";
-import { execSync } from "child_process";
+import { execSync, spawnSync } from "child_process";
 import degit from "degit";
 import { readFileSync, existsSync } from "fs";
 import path from "path";
@@ -12,6 +12,36 @@ import fetch from "node-fetch";
 // Fix __dirname issue for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// **Function to check if PNPM is installed**
+const isPNPMInstalled = () => {
+  try {
+    execSync("pnpm --version", { stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+// **Function to install PNPM if missing**
+const installPNPM = () => {
+  console.log(chalk.yellow("⚠️ PNPM is not installed. Installing now..."));
+  try {
+    execSync("npm install -g pnpm", { stdio: "inherit" });
+    console.log(chalk.green("✅ PNPM installed successfully!"));
+  } catch (error) {
+    console.error(
+      chalk.red("❌ Failed to install PNPM. Please install it manually:")
+    );
+    console.log(chalk.cyan("   npm install -g pnpm"));
+    process.exit(1);
+  }
+};
+
+// **Ensure PNPM is available**
+if (!isPNPMInstalled()) {
+  installPNPM();
+}
 
 // **Locate package.json dynamically**
 let currentVersion = "unknown"; // Default in case package.json is missing
@@ -49,9 +79,7 @@ const checkAndUpdateVersion = async () => {
           `pnpm dlx create-next-supabase-starter@latest ${process.argv
             .slice(2)
             .join(" ")}`,
-          {
-            stdio: "inherit",
-          }
+          { stdio: "inherit" }
         );
         process.exit(0);
       } catch (updateError) {

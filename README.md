@@ -37,12 +37,6 @@ This starter **eliminates the setup hassle** and provides a **pre-configured, pr
 You **don’t need to install anything!** Simply run:
 
 ```sh
-pnpm dlx create-next-supabase-starter@latest my-project
-```
-
-or with `npx`:
-
-```sh
 npx create-next-supabase-starter@latest my-project
 ```
 
@@ -53,7 +47,7 @@ npx create-next-supabase-starter@latest my-project
 If you don’t provide a name, the CLI will prompt you:
 
 ```sh
-pnpm dlx create-next-supabase-starter@latest
+npx create-next-supabase-starter@latest my-project
 ```
 
 👉 If you press **Enter** without a name, it will use **"next-supabase-starter"** by default.

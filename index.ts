@@ -3,7 +3,7 @@
 import chalk from "chalk";
 import { execSync } from "child_process";
 import degit from "degit";
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import path from "path";
 import prompts from "prompts";
 import { fileURLToPath } from "url";
@@ -13,63 +13,80 @@ import fetch from "node-fetch";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Get the current version from package.json
-const packageJsonPath = path.resolve(__dirname, "../package.json"); // Fixed for ES modules
-const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
-const currentVersion = packageJson.version;
+// **Locate package.json dynamically**
+let currentVersion = "unknown"; // Default in case package.json is missing
+const packageJsonPath = path.resolve(__dirname, "../package.json");
+if (existsSync(packageJsonPath)) {
+  const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+  currentVersion = packageJson.version;
+}
 
-// Function to check the latest version from npm
-const checkLatestVersion = async () => {
+// **Function to check and update to latest version**
+const checkAndUpdateVersion = async () => {
+  console.log(chalk.green("Checking For Updates..."));
   try {
     const response = await fetch(
       "https://registry.npmjs.org/create-next-supabase-starter/latest"
     );
-    const data = (await response.json()) as { version?: string }; // Allow `version` to be optional
+    const data = (await response.json()) as { version?: string };
 
     if (!data.version) {
       console.warn(
-        chalk.red("⚠️  Could not fetch the latest version. Continuing...")
+        chalk.red("⚠️ Could not fetch the latest version. Continuing...")
       );
-      return; // Exit the function but do not break execution
+      return;
     }
 
-    const latestVersion = data.version;
+    if (currentVersion !== data.version) {
+      console.log(
+        chalk.yellow(`⚠️ A newer version (${data.version}) is available!`)
+      );
+      console.log(chalk.green(`🔄 Updating automatically...`));
 
-    if (currentVersion !== latestVersion) {
-      console.log(
-        chalk.yellow(`⚠️  A newer version (${latestVersion}) is available!`)
-      );
-      console.log(chalk.green(`🔄  Run the following to update:\n`));
-      console.log(
-        chalk.cyan(`pnpm dlx create-next-supabase-starter@latest my-project\n`)
-      );
-      process.exit(1); // Stop execution and ask the user to update
+      // **Automatically install the latest version and restart**
+      try {
+        execSync(
+          `pnpm dlx create-next-supabase-starter@latest ${process.argv
+            .slice(2)
+            .join(" ")}`,
+          {
+            stdio: "inherit",
+          }
+        );
+        process.exit(0);
+      } catch (updateError) {
+        console.error(
+          chalk.red(
+            "❌ Failed to update automatically. Please update manually."
+          )
+        );
+        console.log(
+          chalk.cyan(
+            `Run: pnpm dlx create-next-supabase-starter@latest my-project`
+          )
+        );
+        process.exit(1);
+      }
+    } else {
+      console.log(chalk.green("You're updated 🎉"));
     }
   } catch (error) {
     console.warn(
-      chalk.red("⚠️  Failed to check latest version. Continuing...")
+      chalk.red("⚠️ Failed to check for latest version. Continuing...")
     );
   }
 };
 
 // **Ensure everything runs inside an async function**
 const runCLI = async () => {
-  await checkLatestVersion();
+  await checkAndUpdateVersion();
 
-  // Check if user passed --version
-  if (process.argv.includes("--version") || process.argv.includes("-v")) {
-    console.log(
-      chalk.green.bold(`create-next-supabase-starter v${currentVersion}`)
-    );
-    process.exit(0);
-  }
-
-  // CLI Banner
+  // **CLI Banner**
   console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
 
   let projectName = process.argv[2];
 
-  // If no project name, ask once. If still empty, use default name.
+  // **If no project name, ask once. If still empty, use default name.**
   if (!projectName) {
     const response = await prompts({
       type: "text",
@@ -83,7 +100,7 @@ const runCLI = async () => {
 
   console.log(chalk.green(`\n📦 Setting up ${projectName}...\n`));
 
-  // Clone the starter repo
+  // **Clone the starter repo**
   const repo = "https://github.com/Mohamed-4rarh/next-supabase-starter.git";
   const emitter = degit(repo, { cache: false, force: true });
 
@@ -91,14 +108,14 @@ const runCLI = async () => {
     await emitter.clone(projectName);
     console.log(chalk.green("✅ Starter project cloned successfully!"));
 
-    // Navigate into project
+    // **Navigate into project**
     process.chdir(projectName);
 
-    // Install dependencies
+    // **Install dependencies**
     console.log(chalk.blue("\n📦 Installing dependencies...\n"));
     execSync("pnpm install", { stdio: "inherit" });
 
-    // Ask if the user wants to initialize Git
+    // **Ask if the user wants to initialize Git**
     const gitResponse = await prompts({
       type: "confirm",
       name: "initializeGit",
@@ -123,7 +140,7 @@ const runCLI = async () => {
     console.log(chalk.cyan(`  cd ${projectName}`));
     console.log(chalk.cyan("  pnpm dev\n"));
 
-    // 🎉 Custom About Me Message
+    // 🎉 **Custom About Me Message**
     console.log(
       chalk.magenta.bold("\n----------------------------------------")
     );

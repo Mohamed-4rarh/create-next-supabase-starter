@@ -53,6 +53,7 @@ console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
       execSync("git init && git add . && git commit -m 'Initial commit'", {
         stdio: "inherit",
       });
+      console.log(chalk.blue("\nYour Git Intialized, Just run 'git push'\n"));
     } else {
       console.log(chalk.yellow("\n⚠️ Skipped Git initialization."));
     }
@@ -69,7 +70,7 @@ console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
     console.log(
       chalk.magenta.bold("\n----------------------------------------")
     );
-    console.log(chalk.magenta.bold("🎉 Created by Mohamed Ararh 🚀"));
+    console.log(chalk.cyan.bold("🎉 Created by Mohamed Ararh 🚀"));
     console.log(
       chalk.magenta("💻 GitHub: ") +
         chalk.cyan("https://github.com/Mohamed-4rarh")

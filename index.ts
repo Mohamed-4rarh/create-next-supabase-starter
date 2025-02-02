@@ -127,7 +127,7 @@ const runCLI = async () => {
     console.log(
       chalk.magenta.bold("\n----------------------------------------")
     );
-    console.log(chalk.green.bold("🎉 Created by Mohamed Ararh 🚀"));
+    console.log(chalk.green.bold("🎉 Created by Mohamed-4rarh 🚀"));
     console.log(
       chalk.green("💻 GitHub: ") +
         chalk.cyan("https://github.com/Mohamed-4rarh")

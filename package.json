@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.2.2"
   },
   "type": "module"

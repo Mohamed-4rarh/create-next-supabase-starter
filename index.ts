@@ -3,7 +3,27 @@
 import chalk from "chalk";
 import { execSync } from "child_process";
 import degit from "degit";
+import { readFileSync } from "fs";
+import path from "path";
 import prompts from "prompts";
+import { fileURLToPath } from "url";
+
+// Fix __dirname issue for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Get the current version from package.json
+const packageJsonPath = path.resolve(__dirname, "../package.json"); // Fixed for ES modules
+const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+const currentVersion = packageJson.version;
+
+// Check if user passed --version
+if (process.argv.includes("--version") || process.argv.includes("-v")) {
+  console.log(
+    chalk.green.bold(`create-next-supabase-starter v${currentVersion}`)
+  );
+  process.exit(0);
+}
 
 // CLI Banner
 console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
@@ -53,7 +73,6 @@ console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
       execSync("git init && git add . && git commit -m 'Initial commit'", {
         stdio: "inherit",
       });
-      console.log(chalk.blue("\nYour Git Intialized, Just run 'git push'\n"));
     } else {
       console.log(chalk.yellow("\n⚠️ Skipped Git initialization."));
     }
@@ -70,14 +89,12 @@ console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
     console.log(
       chalk.magenta.bold("\n----------------------------------------")
     );
-    console.log(chalk.cyan.bold("🎉 Created by Mohamed Ararh 🚀"));
+    console.log(chalk.green.bold("🎉 Created by Mohamed Ararh 🚀"));
     console.log(
-      chalk.magenta("💻 GitHub: ") +
+      chalk.green("💻 GitHub: ") +
         chalk.cyan("https://github.com/Mohamed-4rarh")
     );
-    console.log(
-      chalk.magenta.bold("----------------------------------------\n")
-    );
+    console.log(chalk.green.bold("----------------------------------------\n"));
   } catch (error) {
     console.error(chalk.red("❌ Error setting up project:", error));
   }

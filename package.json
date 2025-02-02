@@ -9,12 +9,35 @@
     "build": "pnpm tsc",
     "prepare": "pnpm run build"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nextjs",
+    "supabase",
+    "nextjs-starter",
+    "supabase-starter",
+    "nextjs-boilerplate",
+    "supabase-auth",
+    "react",
+    "typescript",
+    "nextjs-template",
+    "fullstack",
+    "web-development",
+    "authentication",
+    "cli",
+    "pnpm",
+    "project-generator",
+    "nextjs15",
+    "react19",
+    "starter-kit",
+    "nextjs-cli",
+    "create-next-app",
+    "supabase-authentication"
+  ],
+  "author": "Mohamed-4rarh",
   "license": "ISC",
   "dependencies": {
     "chalk": "^5.4.1",
     "degit": "^2.8.4",
+    "node-fetch": "^3.3.2",
     "prompts": "^2.4.2"
   },
   "devDependencies": {

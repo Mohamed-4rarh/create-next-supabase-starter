@@ -7,6 +7,7 @@ import { readFileSync } from "fs";
 import path from "path";
 import prompts from "prompts";
 import { fileURLToPath } from "url";
+import fetch from "node-fetch";
 
 // Fix __dirname issue for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -17,18 +18,55 @@ const packageJsonPath = path.resolve(__dirname, "../package.json"); // Fixed for
 const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
 const currentVersion = packageJson.version;
 
-// Check if user passed --version
-if (process.argv.includes("--version") || process.argv.includes("-v")) {
-  console.log(
-    chalk.green.bold(`create-next-supabase-starter v${currentVersion}`)
-  );
-  process.exit(0);
-}
+// Function to check the latest version from npm
+const checkLatestVersion = async () => {
+  try {
+    const response = await fetch(
+      "https://registry.npmjs.org/create-next-supabase-starter/latest"
+    );
+    const data = (await response.json()) as { version?: string }; // Allow `version` to be optional
 
-// CLI Banner
-console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
+    if (!data.version) {
+      console.warn(
+        chalk.red("⚠️  Could not fetch the latest version. Continuing...")
+      );
+      return; // Exit the function but do not break execution
+    }
 
-(async () => {
+    const latestVersion = data.version;
+
+    if (currentVersion !== latestVersion) {
+      console.log(
+        chalk.yellow(`⚠️  A newer version (${latestVersion}) is available!`)
+      );
+      console.log(chalk.green(`🔄  Run the following to update:\n`));
+      console.log(
+        chalk.cyan(`pnpm dlx create-next-supabase-starter@latest my-project\n`)
+      );
+      process.exit(1); // Stop execution and ask the user to update
+    }
+  } catch (error) {
+    console.warn(
+      chalk.red("⚠️  Failed to check latest version. Continuing...")
+    );
+  }
+};
+
+// **Ensure everything runs inside an async function**
+const runCLI = async () => {
+  await checkLatestVersion();
+
+  // Check if user passed --version
+  if (process.argv.includes("--version") || process.argv.includes("-v")) {
+    console.log(
+      chalk.green.bold(`create-next-supabase-starter v${currentVersion}`)
+    );
+    process.exit(0);
+  }
+
+  // CLI Banner
+  console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
+
   let projectName = process.argv[2];
 
   // If no project name, ask once. If still empty, use default name.
@@ -98,4 +136,7 @@ console.log(chalk.blue.bold("\n🚀 Create Next.js + Supabase Project\n"));
   } catch (error) {
     console.error(chalk.red("❌ Error setting up project:", error));
   }
-})();
+};
+
+// **Run the CLI inside an async function**
+runCLI();

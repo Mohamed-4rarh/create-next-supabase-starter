@@ -64,8 +64,9 @@ This starter is not just a simple Next.js setup—it comes **fully loaded** with
 | --------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | **Next.js 15 (App Router)** | Optimized for **performance** and **scalability** with modern **server components** and **dynamic routing**. |
 | **React 19**                | Utilizes the **latest features** for efficient rendering and state management.                               |
+| **React Query**             | Utilizes the **best practices** for efficient fetching, mutating and client side state management.           |
 | **TypeScript**              | Provides **strong typing** for better maintainability and developer experience.                              |
-| **Supabase**                | Includes **authentication, database, and storage** setup using `supabase-js`.                                |
+| **Supabase**                | Includes **authentication, database, and storage** setup using `supabase`.                                   |
 | **Tailwind CSS**            | A **utility-first** CSS framework for quick and **scalable styling**.                                        |
 | **shadcn/ui**               | Pre-built, **accessible UI components** styled with Tailwind.                                                |
 | **React Hook Form**         | Lightweight and **powerful form handling** with built-in validation.                                         |
@@ -94,14 +95,16 @@ This starter is not just a simple Next.js setup—it comes **fully loaded** with
 
 ## 🛠️ Options & Features
 
-| Feature                     | Description                                                                   |
-| --------------------------- | ----------------------------------------------------------------------------- |
-| **Project Name**            | If not provided, CLI will prompt for one. Default: `"next-supabase-starter"`. |
-| **Git Setup**               | Asks if you want to initialize a Git repository.                              |
-| **Automatic Installs**      | Installs all dependencies using `pnpm install`.                               |
-| **Pre-configured Supabase** | Ready to use with `supabase-js` for auth, database, and storage.              |
-| **Tailwind & shadcn/ui**    | Built-in styling and UI components, ready to use.                             |
-| **React Hook Form**         | Form handling setup with built-in validation.                                 |
+| Feature                     | Description                                                                                          |
+| --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **Project Name**            | If not provided, CLI will prompt for one. Default: `"next-supabase-starter"`.                        |
+| **Git Setup**               | Asks if you want to initialize a Git repository.                                                     |
+| **Automatic Installs**      | Installs all dependencies using `pnpm install`.                                                      |
+| **Pre-configured Supabase** | Ready to use with `supabase-js` for auth, database, and storage.                                     |
+| **React Query**             | Pre-configured React Query providers with custom hooks (fetch, mutate).                              |
+| **Auth Query Wrapper**      | Auth Context mixed between supabase functions with react query providers ensures fresh user session. |
+| **Tailwind & shadcn/ui**    | Built-in styling and UI components, ready to use.                                                    |
+| **React Hook Form**         | Form handling setup with built-in validation.                                                        |
 
 ---
 
@@ -111,6 +114,7 @@ This starter is not just a simple Next.js setup—it comes **fully loaded** with
 ✅ **Focus on Building, Not Configuring** – Get started instantly with Next.js 15, Supabase, and Tailwind.  
 ✅ **Best Practices Included** – The latest web development trends and best practices are built-in.  
 ✅ **Save Time & Effort** – Stop wasting hours setting up the same things repeatedly.
+✅ **Built-Ins** – Built-in auth system and thats always was a little hard for beginners with react query and supabase.
 
 💡 **With this starter, you can start writing actual business logic from Day 1!**
 
@@ -135,7 +139,7 @@ Enter your project name (or press enter to use default): my-app
   pnpm dev
 
 ----------------------------------------
-🎉 Created by Mohamed Ararh 🚀
+🎉 Created by Mohamed 4rarh 🚀
 💻 GitHub: https://github.com/Mohamed-4rarh
 ----------------------------------------
 ```

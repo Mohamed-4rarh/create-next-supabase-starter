@@ -1,6 +1,6 @@
 {
   "name": "create-next-supabase-starter",
-  "version": "1.1.11",
+  "version": "1.1.10",
   "description": "A simple CLI to create a Next.js 15 + Supabase project",
   "bin": {
     "create-next-supabase": "dist/index.js"
